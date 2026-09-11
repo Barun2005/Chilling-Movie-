@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useMovie } from '../context/MovieContext';
 import { PROFILES, GENRE_CATEGORIES } from '../data/moviesData';
 import ChillingLogo from './ChillingLogo';
-import { Search, Sparkles, Film, Heart, ChevronDown, User, LogOut, Shield } from 'lucide-react';
+import { Search, Sparkles, Film, Heart, ChevronDown, User, LogOut, Shield, Cpu } from 'lucide-react';
 
 export default function Navbar() {
   const {
@@ -16,7 +16,8 @@ export default function Navbar() {
     setSelectedGenre,
     activeTab,
     setActiveTab,
-    myList
+    myList,
+    setIsMLInspectorOpen
   } = useMovie();
 
   const [isScrolled, setIsScrolled] = useState(false);
@@ -65,6 +66,17 @@ export default function Navbar() {
               onClick={() => setActiveTab('mylist')}
             >
               My List ({myList.length})
+            </button>
+          </li>
+          <li>
+            <button 
+              className="nav-link"
+              onClick={() => setIsMLInspectorOpen(true)}
+              style={{ color: '#46d369', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}
+              title="Inspect Machine Learning Model & Cosine Similarity Embeddings"
+            >
+              <Cpu size={14} color="#46d369" />
+              <span>ML Engine</span>
             </button>
           </li>
 

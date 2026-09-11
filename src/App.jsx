@@ -9,9 +9,10 @@ import MovieCard from './components/MovieCard';
 import MovieModal from './components/MovieModal';
 import RecommendationWizard from './components/RecommendationWizard';
 import AuthScreen from './components/AuthScreen';
+import MLInspectorModal from './components/MLInspectorModal';
 import Footer from './components/Footer';
 
-import { Sparkles, Flame, Film, Shield, Heart, Zap, Search, BookmarkCheck, Smile, Clapperboard, FlameKindling } from 'lucide-react';
+import { Sparkles, Flame, Film, Shield, Heart, Zap, Search, BookmarkCheck, Smile, Clapperboard, FlameKindling, Cpu } from 'lucide-react';
 
 function AppContent() {
   const { 
@@ -23,7 +24,9 @@ function AppContent() {
     searchQuery, 
     selectedGenre, 
     selectedMood,
-    activeTab 
+    activeTab,
+    isMLInspectorOpen,
+    setIsMLInspectorOpen 
   } = useMovie();
 
   // If user is not logged in, render Netflix Sign In / Sign Up Screen
@@ -104,10 +107,10 @@ function AppContent() {
             <div style={{ marginBottom: '32px' }}>
               <h1 className="row-title" style={{ fontSize: '2.2rem', marginBottom: '8px' }}>
                 <Sparkles size={32} color="#E50914" />
-                <span>Personalized AI Movie Feed</span>
+                <span>Personalized Machine Learning Recommendation Feed</span>
               </h1>
               <p style={{ color: '#aaa', fontSize: '15px' }}>
-                Engineered dynamically based on your likes, watched history, and taste profile.
+                Engineered dynamically via Cosine Similarity vector space matching across feature embeddings.
               </p>
             </div>
 
@@ -158,8 +161,8 @@ function AppContent() {
 
               {/* Recommended For You Row */}
               <CategoryRow 
-                title="Recommended For You (95%+ Match)" 
-                icon={Sparkles} 
+                title="Machine Learning Matches (Cosine Similarity)" 
+                icon={Cpu} 
                 movies={aiRecommendedMovies} 
               />
 
@@ -176,6 +179,12 @@ function AppContent() {
 
       {/* Global Movie & Trailer Player Overlay Modal */}
       <MovieModal />
+
+      {/* Machine Learning Inspector & Vector Visualizer Modal */}
+      <MLInspectorModal 
+        isOpen={isMLInspectorOpen} 
+        onClose={() => setIsMLInspectorOpen(false)} 
+      />
 
       <Footer />
     </div>

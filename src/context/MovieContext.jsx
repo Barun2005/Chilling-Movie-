@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import { MOVIES_DATA, PROFILES } from '../data/moviesData';
+import { buildUserTasteVector, calculateMLScore } from '../utils/mlEngine';
 
 const MovieContext = createContext();
 
@@ -19,6 +20,15 @@ export function MovieProvider({ children }) {
   });
 
   const [authMode, setAuthMode] = useState('login'); // 'login' or 'signup'
+
+  // Machine Learning Model Hyperparameters
+  const [mlWeights, setMlWeights] = useState({
+    alphaContent: 0.65, // Content Cosine Similarity Weight
+    betaRating: 0.25,   // IMDb Quality Weight
+    gammaLikeBoost: 0.10 // User Affinity Weight
+  });
+
+  const [isMLInspectorOpen, setIsMLInspectorOpen] = useState(false);
 
   // Saved Watchlist in LocalStorage
   const [myList, setMyList] = useState(() => {
@@ -62,6 +72,11 @@ export function MovieProvider({ children }) {
   // Modals
   const [activeMovieModal, setActiveMovieModal] = useState(null);
   const [activeTrailerModal, setActiveTrailerModal] = useState(null);
+
+  // Compute Machine Learning User Taste Vector
+  const userTasteVector = useMemo(() => {
+    return buildUserTasteVector(likedMovies, MOVIES_DATA);
+  }, [likedMovies]);
 
   // Sync state to LocalStorage
   useEffect(() => {
@@ -152,23 +167,15 @@ export function MovieProvider({ children }) {
     });
   };
 
+  // Dynamic Machine Learning Match Calculation
   const getDynamicMatchScore = (movie) => {
-    let score = movie.matchScore || 90;
-    if (likedMovies[movie.id]) score = Math.min(99, score + 4);
-    
-    const likedGenres = new Set();
-    Object.keys(likedMovies).forEach(id => {
-      const m = MOVIES_DATA.find(x => x.id === id);
-      if (m) m.genres.forEach(g => likedGenres.add(g));
-    });
+    const mlResult = calculateMLScore(movie, userTasteVector, mlWeights);
+    let finalScore = mlResult.matchScore;
 
-    movie.genres.forEach(g => {
-      if (likedGenres.has(g)) score = Math.min(99, score + 2);
-    });
+    if (likedMovies[movie.id]) finalScore = Math.min(99, finalScore + 4);
+    if (dislikedMovies[movie.id]) finalScore = Math.max(50, finalScore - 25);
 
-    if (dislikedMovies[movie.id]) score = Math.max(50, score - 25);
-
-    return score;
+    return finalScore;
   };
 
   const filteredMovies = useMemo(() => {
@@ -203,7 +210,7 @@ export function MovieProvider({ children }) {
         dynamicScore: getDynamicMatchScore(movie)
       }))
       .sort((a, b) => b.dynamicScore - a.dynamicScore);
-  }, [likedMovies, dislikedMovies]);
+  }, [likedMovies, dislikedMovies, userTasteVector, mlWeights]);
 
   return (
     <MovieContext.Provider
@@ -214,6 +221,11 @@ export function MovieProvider({ children }) {
         loginUser,
         signupUser,
         logoutUser,
+        mlWeights,
+        setMlWeights,
+        userTasteVector,
+        isMLInspectorOpen,
+        setIsMLInspectorOpen,
         movies: MOVIES_DATA,
         filteredMovies,
         aiRecommendedMovies,
