@@ -1,0 +1,70 @@
+[
+  {
+    "title": "The Vampire Diaries",
+    "genres": [
+      "Romance",
+      "Horror"
+    ],
+    "moods": [
+      "Dark & Gritty"
+    ],
+    "synopsis": "Supernatural vampire brothers in love with Elena.",
+    "director": "Julie Plec",
+    "cast": [
+      "Nina Dobrev",
+      "Ian Somerhalder"
+    ],
+    "imdbScore": 8.7
+  },
+  {
+    "title": "Our Fault (Culpa M\u00eda)",
+    "genres": [
+      "Romance",
+      "Drama"
+    ],
+    "moods": [
+      "Cozy & Feel-Good"
+    ],
+    "synopsis": "Underground racing and passionate romance.",
+    "director": "Domingo",
+    "cast": [
+      "Nicole Wallace",
+      "Gabriel Guevara"
+    ],
+    "imdbScore": 8.6
+  },
+  {
+    "title": "Toxic",
+    "genres": [
+      "Action",
+      "Crime",
+      "Bollywood"
+    ],
+    "moods": [
+      "Dark & Gritty"
+    ],
+    "synopsis": "An assassin wages a war against cartels.",
+    "director": "Geetu",
+    "cast": [
+      "Yash",
+      "Nayanthara"
+    ],
+    "imdbScore": 9.4
+  },
+  {
+    "title": "Cyber Genesis",
+    "genres": [
+      "Sci-Fi",
+      "Action"
+    ],
+    "moods": [
+      "Mind-Bending"
+    ],
+    "synopsis": "Rogue detective in 2088 neon city.",
+    "director": "Sora",
+    "cast": [
+      "Elena Rostova"
+    ],
+    "imdbScore": 8.9
+  }
+]
