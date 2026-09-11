@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useMovie } from '../context/MovieContext';
 import { PROFILES, GENRE_CATEGORIES } from '../data/moviesData';
+import ChillingLogo from './ChillingLogo';
 import { Search, Sparkles, Film, Heart, ChevronDown, User, LogOut, Shield } from 'lucide-react';
 
 export default function Navbar() {
@@ -32,17 +33,14 @@ export default function Navbar() {
   return (
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="nav-left">
-        <div 
-          className="logo-brand" 
+        <ChillingLogo 
+          size={34}
           onClick={() => {
             setActiveTab('home');
             setSelectedGenre('All');
             setSearchQuery('');
           }}
-        >
-          <span>CHILLING</span>
-          <span className="brand-badge">MATCH AI</span>
-        </div>
+        />
 
         <ul className="nav-links">
           <li>

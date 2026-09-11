@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useMovie } from '../context/MovieContext';
+import ChillingLogo from './ChillingLogo';
 import { Sparkles, Check, Lock, Mail, User as UserIcon, ShieldCheck } from 'lucide-react';
 
 export default function AuthScreen() {
@@ -53,10 +54,7 @@ export default function AuthScreen() {
         alignItems: 'center',
         justifyContent: 'space-between'
       }}>
-        <div className="logo-brand" style={{ fontSize: '32px' }}>
-          <span>CHILLING</span>
-          <span className="brand-badge">MATCH AI</span>
-        </div>
+        <ChillingLogo size={38} />
 
         <button 
           className="btn-secondary"
